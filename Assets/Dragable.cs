@@ -8,12 +8,15 @@ public abstract class Dragable : MonoBehaviour
     protected bool isDragging = true;
     Vector3 screenPoint;
     Camera dragCamera;
+    Material material;
+    public Collider placeCollider;
     protected abstract bool canBuildItem();
     protected abstract void build();
 
     protected virtual void Start()
     {
         dragCamera = Camera.main;
+        material = GetComponent<Renderer>().material;
         screenPoint = dragCamera.WorldToScreenPoint(gameObject.transform.position);
     }
 
@@ -24,11 +27,11 @@ public abstract class Dragable : MonoBehaviour
             bool canbuild = canBuildItem();
             if (!canbuild)
             {
-                GetComponent<Renderer>().material.color = Color.red;
+                material.color = Color.red;
             }
             else
             {
-                GetComponent<Renderer>().material.color = Color.green;
+                material.color = Color.green;
             }
 
             Vector3 newPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
@@ -38,11 +41,21 @@ public abstract class Dragable : MonoBehaviour
             {
                 if (canbuild)
                 {
+                    material.color = Color.white;
                     build();
                     isDragging = false;
                 }
             }
+            if (Input.GetMouseButtonDown(1))
+            {
+                cancelDragItem();
+            }
 
         }
+    }
+
+    public void cancelDragItem()
+    {
+        MouseManager.Instance.cancelDragItem(gameObject);
     }
 }

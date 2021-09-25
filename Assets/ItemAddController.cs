@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomManager : MonoBehaviour
+public class ItemAddController : MonoBehaviour
 {
-    public List<DraggableRoom> rooms = new List<DraggableRoom>();
-    
     // Start is called before the first frame update
     void Start()
     {
