@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class RoomSelectionController : MonoBehaviour
+public class RoomSelectionController : SelectionController
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override int allItemInfoCount()
     {
-        
+        return RoomManager.Instance.roomInfoDict.Values.Count;
     }
-
-    // Update is called once per frame
-    void Update()
+    protected override InfoBase itemInfo(int i)
     {
-        
+        return RoomManager.Instance.roomInfoDict.Values.ToList()[i];
     }
 }

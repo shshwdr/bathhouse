@@ -14,7 +14,12 @@ public class MouseManager : Singleton<MouseManager>
         }
         currentDragItem = go;
     }
+    public void cancelCurrentDragItem()
+    {
 
+        Destroy(currentDragItem);
+        currentDragItem = null;
+    }
     public void cancelDragItem(GameObject go)
     {
         if(currentDragItem != go)
@@ -35,6 +40,10 @@ public class MouseManager : Singleton<MouseManager>
         }
 
         currentDragItem = null;
+    }
+    private void Start()
+    {
+        Doozy.Engine.GameEventMessage.SendEvent("addItem");
     }
     private void Update()
     {

@@ -5,11 +5,19 @@ using UnityEngine;
 public class RegionController : MonoBehaviour
 {
     public Collider regionCollider;
+    public int index;
     public List<DraggableRoom> rooms = new List<DraggableRoom>();
+
+    public Cinemachine.CinemachineVirtualCamera buildCamera;
 
     public void addRoom(DraggableRoom room)
     {
         rooms.Add(room);
+    }
+
+    public void removeRoom(DraggableRoom room)
+    {
+        rooms.Remove(room);
     }
     public bool canPlaceRoom(DraggableRoom room)
     {

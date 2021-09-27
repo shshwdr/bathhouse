@@ -10,7 +10,6 @@ public class Utils : MonoBehaviour
     {
         return Random.Range(0, 2) > 0;
     }
-
     static public bool arrayContains<T>(T[] array, T target)
     {
         foreach (T t in array)
@@ -58,6 +57,12 @@ public class Utils : MonoBehaviour
         var values = System.Enum.GetValues(typeof(T));
         int random = UnityEngine.Random.Range(0, values.Length);
         return (T)values.GetValue(random);
+    }
+
+    public static int enumLength<T>()
+    {
+        var values = System.Enum.GetValues(typeof(T));
+        return values.Length;
     }
 
     static float snapFloat(float gridSize, float origin)

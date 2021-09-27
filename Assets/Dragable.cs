@@ -16,7 +16,7 @@ public abstract class Dragable : MonoBehaviour
     protected virtual void Start()
     {
         dragCamera = Camera.main;
-        material = GetComponent<Renderer>().material;
+        material = GetComponentInChildren<Renderer>().material;
         screenPoint = dragCamera.WorldToScreenPoint(gameObject.transform.position);
     }
 
@@ -41,9 +41,10 @@ public abstract class Dragable : MonoBehaviour
             {
                 if (canbuild)
                 {
-                    material.color = Color.white;
-                    build();
                     isDragging = false;
+                    material.color = Color.white;
+                    MouseManager.Instance.finishDragItem(gameObject);
+                    build();
                 }
             }
             if (Input.GetMouseButtonDown(1))

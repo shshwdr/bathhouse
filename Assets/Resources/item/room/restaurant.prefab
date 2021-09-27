@@ -59,5 +59,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: restaurant
       objectReference: {fileID: 0}
+    - target: {fileID: 3180599907642641465, guid: b050d27cc2b868e44b3016e20acaf2a0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 052821051301bb849ab0e4f50ad32d10, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b050d27cc2b868e44b3016e20acaf2a0, type: 3}

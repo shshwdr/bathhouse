@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UINode
   m_EditorClassIdentifier: 
   ErrorNodeNameIsEmpty: 0
-  ErrorDuplicateNameFoundInGraph: 1
+  ErrorDuplicateNameFoundInGraph: 0
   m_inputSockets:
   - m_connectionMode: 1
     m_connections:
@@ -87,6 +87,32 @@ MonoBehaviour:
     m_value: '{"ButtonCategory":"General","ButtonName":"Unnamed","GameEvent":"cancel","TimeDelay":3.0,"Trigger":3}'
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - m_connectionMode: 0
+    m_connections:
+    - m_inputConnectionPoint: {x: 202, y: 4}
+      m_outputConnectionPoint: {x: -2, y: 4}
+      m_id: ae504597-2a22-4687-b2de-2984a063208e
+      m_inputNodeId: 67da9596-de0f-40dc-a7ec-0460eec37741
+      m_inputSocketId: acc42118-b1a1-420f-a1d4-2e94d409bef2
+      m_outputNodeId: bb7f9ccf-82ec-46ab-8134-ae61ba5a99d2
+      m_outputSocketId: 8567f0a7-2335-4e56-b51b-ca210474cd73
+    m_connectionPoints:
+    - {x: -2, y: 4}
+    - {x: 202, y: 4}
+    m_direction: 1
+    m_canBeDeleted: 1
+    m_canBeReordered: 1
+    m_curveModifier: 0
+    m_height: 24
+    m_width: 216
+    m_x: 0
+    m_y: 110
+    m_id: 8567f0a7-2335-4e56-b51b-ca210474cd73
+    m_nodeId: bb7f9ccf-82ec-46ab-8134-ae61ba5a99d2
+    m_socketName: OutputSocket_2
+    m_value: '{"ButtonCategory":"General","ButtonName":"Unnamed","GameEvent":"finish","TimeDelay":3.0,"Trigger":3}'
+    m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_nodeType: 4
   m_allowDuplicateNodeName: 0
   m_allowEmptyNodeName: 0
@@ -95,15 +121,15 @@ MonoBehaviour:
   m_useFixedUpdate: 0
   m_useLateUpdate: 0
   m_useUpdate: 0
-  m_height: 152
+  m_height: 176
   m_width: 216
-  m_x: 648
-  m_y: -48
+  m_x: 768
+  m_y: -36
   m_minimumInputSocketsCount: 1
   m_minimumOutputSocketsCount: 1
   m_graphId: df5c63f4-480b-4007-bdb7-67792bec51ad
   m_id: bb7f9ccf-82ec-46ab-8134-ae61ba5a99d2
-  m_name: UI Node
+  m_name: addItemNode
   m_notes: 
   m_onEnterShowViews:
   - Category: Build
@@ -128,7 +154,7 @@ MonoBehaviour:
   m_Name: UINode
   m_EditorClassIdentifier: 
   ErrorNodeNameIsEmpty: 0
-  ErrorDuplicateNameFoundInGraph: 1
+  ErrorDuplicateNameFoundInGraph: 0
   m_inputSockets:
   - m_connectionMode: 1
     m_connections:
@@ -153,6 +179,13 @@ MonoBehaviour:
       m_inputSocketId: acc42118-b1a1-420f-a1d4-2e94d409bef2
       m_outputNodeId: bb7f9ccf-82ec-46ab-8134-ae61ba5a99d2
       m_outputSocketId: f5925121-6895-40e6-95c9-a03b6fd99296
+    - m_inputConnectionPoint: {x: 202, y: 4}
+      m_outputConnectionPoint: {x: -2, y: 4}
+      m_id: ae504597-2a22-4687-b2de-2984a063208e
+      m_inputNodeId: 67da9596-de0f-40dc-a7ec-0460eec37741
+      m_inputSocketId: acc42118-b1a1-420f-a1d4-2e94d409bef2
+      m_outputNodeId: bb7f9ccf-82ec-46ab-8134-ae61ba5a99d2
+      m_outputSocketId: 8567f0a7-2335-4e56-b51b-ca210474cd73
     m_connectionPoints:
     - {x: -2, y: 4}
     - {x: 202, y: 4}
@@ -232,18 +265,18 @@ MonoBehaviour:
   m_minimumOutputSocketsCount: 1
   m_graphId: df5c63f4-480b-4007-bdb7-67792bec51ad
   m_id: 67da9596-de0f-40dc-a7ec-0460eec37741
-  m_name: UI Node
+  m_name: mainHud
   m_notes: 
   m_onEnterShowViews:
   - Category: General
     InstantAction: 0
-    Name: Unnamed
+    Name: mainHud
   m_onEnterHideViews: []
   m_onExitShowViews: []
   m_onExitHideViews:
   - Category: General
     InstantAction: 0
-    Name: Unnamed
+    Name: mainHud
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +299,7 @@ MonoBehaviour:
   m_version: 1
   m_description: 
   m_id: df5c63f4-480b-4007-bdb7-67792bec51ad
-  m_lastModified: 132770287497064773
+  m_lastModified: 132771093752625831
 --- !u!114 &2807606253738977210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -280,7 +313,7 @@ MonoBehaviour:
   m_Name: UINode
   m_EditorClassIdentifier: 
   ErrorNodeNameIsEmpty: 0
-  ErrorDuplicateNameFoundInGraph: 1
+  ErrorDuplicateNameFoundInGraph: 0
   m_inputSockets:
   - m_connectionMode: 1
     m_connections:
@@ -390,13 +423,13 @@ MonoBehaviour:
   m_useUpdate: 0
   m_height: 176
   m_width: 216
-  m_x: 348
-  m_y: -48
+  m_x: 384
+  m_y: 96
   m_minimumInputSocketsCount: 1
   m_minimumOutputSocketsCount: 1
   m_graphId: df5c63f4-480b-4007-bdb7-67792bec51ad
   m_id: 7552d4e3-f24c-470a-a127-2f51e81c2381
-  m_name: UI Node
+  m_name: buildRoomNode
   m_notes: 
   m_onEnterShowViews:
   - Category: Build

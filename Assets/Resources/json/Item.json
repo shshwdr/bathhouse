@@ -1,156 +1,29 @@
 {
-    "allItem":
+    "allMainItem":
     [
       {
-        "name": "leave",
-        "displayName":"Leaf",
-        "description":"Leaf of maple, you can find it everywhere in autumn",
-        "pickup":"Clean Leaves",
-        "pickupTime":1
+        "name": "bed",
+        "displayName":"Bed",
+        "description":"Bed",
+        "rooms":["bedroom"]
       },{
-        "name": "stick",
-        "displayName":"Stick",
-        "description":"Stick of bush, can make structure of house",
-        "pickup":"Prune Bush",
-        "animation":"saw",
-        "conditionInventory":"saw",
-        "pickupTime":1.5
+        "name": "bottle",
+        "displayName":"Bottle",
+        "description":"Bottle",
+        "rooms":["bedroom"]
+      }
+    ],
+    "allDecorations":[
+      {
+        "name": "tree",
+        "displayName":"Tree",
+        "description":"Tree",
+        "rooms":["bedroom"]
       },{
-        "name": "wood",
-        "displayName":"Wood",
-        "description":"Wood of stout, stronger than stick",
-        "pickup":"Cut Tree Stout",
-        "animation":"chainsaw",
-        "conditionInventory":"chainsaw",
-        "isImportant":true,
-        "pickupTime":2
-      },{
-        "name": "fallingtree",
-        "displayName":"Wood",
-        "description":"Wood of stout, stronger than stick",
-        "pickup":"Cut Falling Tree",
-        "animation":"chainsaw",
-        "conditionInventory":"chainsaw",
-        "dialogue":"fallingTree",
-        "noItemCollected":true,
-        "pickupTime":4
-      },
-      {
-        "name": "carrot",
-        "displayName":"Carrot",
-        "description":"Not my favorite vegetable. Rabbit's favorite?",
-        "pickup":"Harvest Carrot",
-        "pickupTime":2
-      },
-      {
-        "name": "carrotCake",
-        "displayName":"Carrot Cake",
-        "description":"Even child who hates carrot would love it.",
-        "pickup":"Harvest Carrot",
-        "pickupTime":2
-      },
-      {
-        "name": "fish",
-        "displayName":"Blue Gill",
-        "description":"Looks tasty， useful to store fat",
-        "pickup":"Pickup Blue Gill",
-        "pickupTime":1
-      },
-      {
-        "name": "kite",
-        "displayName":"Kite",
-        "description":"Hand-made kite, has some wear.",
-        "pickup":"Fetch the Kite",
-        "isImportant":true,
-        "pickupTime":1
-      },
-      {
-        "name": "wheat",
-        "displayName":"Wheat",
-        "description":"Taste better with process.",
-        "pickup":"Harvest Wheat",
-        "pickupTime":1
-      },
-      {
-        "name": "pumpkin",
-        "displayName":"Pumpkin",
-        "description":"The most symbolic vegetable in autumn.",
-        "pickup":"Harvest Pumpkin",
-        "pickupTime":1
-      },
-      {
-        "name": "pumpkinCake",
-        "displayName":"Pumpkin Cake",
-        "description":"Pie make of pumpkin, a warm color.",
-        "pickup":"Harvest Pumpkin",
-        "pickupTime":1
-      },
-      {
-        "name": "fishCake",
-        "displayName":"Stargazy Pie",
-        "description":"Looks suspicious, the fish is looking at me!!",
-        "pickup":"Harvest Pumpkin",
-        "pickupTime":1
-      },
-      {
-        "name": "rock",
-        "displayName":"Rock",
-        "description":"Small rocks, stonger and fire proof",
-        "pickup":"Dig Rocks",
-        "animation":"pickaxe",
-        "conditionInventory":"pickaxe",
-        "isImportant":true,
-        "pickupTime":2
-      },
-      {
-        "name": "footprint",
-        "displayName":"Leave",
-        "description":"Leave of maple",
-        "pickup":"Investigate Footprint",
-        "dialogue":"footprint",
-        "variable":"foundFootprint",
-        "noItemCollected":true,
-        "pickupTime":1
-      },
-      {
-        "name": "rake",
-        "displayName":"Rake",
-        "description":"Can search places far away",
-        "pickup":"Pickup Rake",
-        "isImportant":true,
-        "pickupTime":2
-      },
-      {
-        "name": "saw",
-        "displayName":"Saw",
-        "description":"Can cut sticks down from bush",
-        "pickup":"Pickup Rake",
-        "isImportant":true,
-        "pickupTime":2
-      },
-      {
-        "name": "chainsaw",
-        "displayName":"ChainSaw",
-        "description":"Can cut down the whole tree",
-        "pickup":"Pickup Rake",
-        "isImportant":true,
-        "pickupTime":3
-      },
-      {
-        "name": "pickaxe",
-        "displayName":"Pick Axe",
-        "description":"Can mine stones",
-        "pickup":"Pickup Rake",
-        "isImportant":true,
-        "pickupTime":0.3
-      },
-      {
-        "name": "fishrod",
-        "displayName":"Fish rod",
-        "description":"Can be used for fishing",
-        "pickup":"Pickup Rake",
-        "isImportant":true,
-        "pickupTime":0.3
+        "name": "lamp",
+        "displayName":"Lamp",
+        "description":"Lamp",
+        "rooms":["bedroom"]
       }
     ]
   }
