@@ -21,6 +21,14 @@ public class Utils : MonoBehaviour
         }
         return false;
     }
+
+    static public bool colliderContainFromTop(Collider collider, Collider innerCollider)
+    {
+        Vector3 minBound = new Vector3(innerCollider.bounds.min.x, collider.bounds.min.y, innerCollider.bounds.min.z);
+        Vector3 maxBound = new Vector3(innerCollider.bounds.max.x, collider.bounds.min.y, innerCollider.bounds.max.z);
+
+        return collider.bounds.Contains(minBound) && collider.bounds.Contains(maxBound);
+    }
     static public int findClosestIndex<T>(Transform targetTransform, List<T> candicateTransforms) where T : MonoBehaviour
     {
         int res = 0;

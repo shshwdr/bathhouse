@@ -42,7 +42,6 @@ public class RoomManager : Singleton<RoomManager>
     }
 
 
-
     public void addRoom(DraggableRoom room)
     {
         rooms[room.roomType].Add(room);

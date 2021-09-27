@@ -6,9 +6,10 @@ public class DraggableItem : Dragable
 {
     protected override bool canBuildItem()
     {
-        return true;
+        return BuildModeManager.Instance.currentRoom.canPlaceItem(this);
     }
     protected override void build()
     {
+        BuildModeManager.Instance.currentRoom.addItem(this);
     }
 }
