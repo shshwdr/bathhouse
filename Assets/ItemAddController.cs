@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class ItemAddController : SelectionController
 {
-    protected override int allItemInfoCount()
+    protected override List<InfoBase> allItems()
     {
-        return RoomItemManager.Instance.mainItemInfoDict.Values.Count;
-    }
-    protected override InfoBase itemInfo(int i)
-    {
-        return RoomItemManager.Instance.mainItemInfoDict.Values.ToList()[i];
+        var res = new List<InfoBase>();
+        foreach (var info in RoomItemManager.Instance.mainItemInfoDict.Values)
+        {
+            if (info.rooms.Contains(BuildModeManager.Instance.currentRoom.type))
+            {
+                res.Add(info);
+            }
+        }
+        return res;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class RegionController : MonoBehaviour
 {
     public Collider regionCollider;
+    public string regionType;
     public int index;
     public List<DraggableRoom> rooms = new List<DraggableRoom>();
 

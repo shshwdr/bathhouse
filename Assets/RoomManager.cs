@@ -12,7 +12,7 @@ public class InfoBase
 
 public class RoomInfo: InfoBase
 {
-    public string region;
+    public string[] regions;
 
 }
 public class AllRoomInfo
@@ -24,7 +24,7 @@ public class RoomManager : Singleton<RoomManager>
 {
     //public List<DraggableRoom> rooms = new List<DraggableRoom>();
     public Dictionary<string, RoomInfo> roomInfoDict = new Dictionary<string, RoomInfo>();
-    public Dictionary<RoomType, List<DraggableRoom>> rooms = new Dictionary<RoomType, List<DraggableRoom>>();
+    public Dictionary<string, List<DraggableRoom>> rooms = new Dictionary<string, List<DraggableRoom>>();
     // Start is called before the first frame update
     void Awake()
     {
@@ -35,27 +35,31 @@ public class RoomManager : Singleton<RoomManager>
             roomInfoDict[info.name] = info;
         }
 
-        foreach (RoomType type in System.Enum.GetValues(typeof(RoomType)))
-        {
-            rooms[type] = new List<DraggableRoom>();
-        }
     }
 
 
     public void addRoom(DraggableRoom room)
     {
-        rooms[room.roomType].Add(room);
+        if (!rooms.ContainsKey(room.type))
+        {
+            rooms[room.type] = new List<DraggableRoom>();
+        }
+        rooms[room.type].Add(room);
     }
 
     public void removeRoom(DraggableRoom room)
     {
-        rooms[room.roomType].Remove(room);
+        rooms[room.type].Remove(room);
     }
 
     public List<DraggableRoom> availableBedroom()
     {
         List<DraggableRoom> res = new List<DraggableRoom>();
-        foreach(DraggableRoom room in rooms[RoomType.bedroom])
+        if (!rooms.ContainsKey("bedroom"))
+        {
+            return res;
+        }
+        foreach (DraggableRoom room in rooms["bedroom"])
         {
             if (!room.occupied)
             {

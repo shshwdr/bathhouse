@@ -10,7 +10,17 @@
         "name": "bottle",
         "displayName":"Bottle",
         "description":"Bottle",
-        "rooms":["bedroom"]
+        "rooms":["bedroom","shop","restaurant"]
+      },{
+        "name": "springWater",
+        "displayName":"Normal Spring Water",
+        "description":"Normal Spring Water",
+        "rooms":["spring"]
+      },{
+        "name": "saltSpringWater",
+        "displayName":"Salt Spring Water",
+        "description":"Salt Spring Water",
+        "rooms":["spring"]
       }
     ],
     "allDecorations":[
@@ -24,6 +34,11 @@
         "displayName":"Lamp",
         "description":"Lamp",
         "rooms":["bedroom"]
+      },{
+        "name": "duck",
+        "displayName":"Duck",
+        "description":"Duck",
+        "rooms":["spring"]
       }
     ]
   }

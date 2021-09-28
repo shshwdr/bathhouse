@@ -53,7 +53,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1781989538724335201, guid: b050d27cc2b868e44b3016e20acaf2a0, type: 3}
       propertyPath: m_Name
-      value: room
+      value: bedroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 7244225195936533677, guid: b050d27cc2b868e44b3016e20acaf2a0, type: 3}
+      propertyPath: roomType
+      value: bedroom
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b050d27cc2b868e44b3016e20acaf2a0, type: 3}

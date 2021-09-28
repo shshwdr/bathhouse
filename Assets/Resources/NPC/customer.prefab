@@ -108,6 +108,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7404668250230751155, guid: 9d6f7c0c55e44de4b8e17baa25099f87, type: 3}
+      propertyPath: minmaxSpeed.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404668250230751155, guid: 9d6f7c0c55e44de4b8e17baa25099f87, type: 3}
+      propertyPath: minmaxSpeed.y
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7404668250230751158, guid: 9d6f7c0c55e44de4b8e17baa25099f87, type: 3}
       propertyPath: m_Name
       value: customer

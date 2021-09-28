@@ -5,19 +5,25 @@
         "name": "bedroom",
         "displayName":"Bedroom",
         "description":"Room for customer to sleep",
-        "region":"house"
+        "regions":["house"]
       },
       {
         "name": "shop",
         "displayName":"Shop",
         "description":"Room for customer to buy itmes",
-        "region":"house"
+        "regions":["house","garden"]
       },
       {
         "name": "restaurant",
         "displayName":"Restaurant",
         "description":"Room for customer to eat",
-        "region":"house"
+        "regions":["house","garden"]
+      },
+      {
+        "name": "spring",
+        "displayName":"Spring",
+        "description":"A warm spring",
+        "regions":["garden"]
       }
     ]
   }

@@ -7,19 +7,23 @@ public abstract class SelectionController : MonoBehaviour
 {
     public Transform contentParent;
 
-    protected abstract int allItemInfoCount();
-    protected abstract InfoBase itemInfo(int i);
+    protected abstract List<InfoBase> allItems();
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
+        updateUI();
+    }
+    public void updateUI()
+    {
+
         int i = 0;
-       // var allInfo = allItemInfo();
-        for (; i < allItemInfoCount(); i++)
+        var items = allItems();
+        for (; i < items.Count; i++)
         {
             contentParent.GetChild(i).gameObject.SetActive(true);
 
             BuildItemButton button = contentParent.GetChild(i).GetComponent<BuildItemButton>();
-            button.init(itemInfo(i));
+            button.init(items[i]);
         }
         for (; i < contentParent.childCount; i++)
         {

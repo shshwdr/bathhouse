@@ -2,19 +2,155 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+public enum BehaviorStatus { none, go, stay, back}
+public class CustomerBehavior {
+    public string target;
+    public float stayTime;
+    public bool returnRoom;
+    public BehaviorStatus status;
+    public CustomerBehavior(string t, float s, bool r = true)
+    {
+        target = t;
+        stayTime = s;
+        returnRoom = r;
+    }
+}
+
 
 public class Customer : MonoBehaviour
 {
     NavMeshAgent agent;
+    float stayTime = 2;
     public Vector2 minmaxSpeed = new Vector2(0.5f, 1.5f);
     Animator anim;
-    List<Transform> wayPoints = new List<Transform>();
+    //Transform wayPoint;
+    Vector3 targetPosition;
     DraggableRoom liveRoom;
+    int maxBehavior = 5;
+    float currentStayTime = 0;
+    List<CustomerBehavior> behaviors = new List<CustomerBehavior>();
+    Vector3 startPosition;
+
+    void debugBehavior(string t)
+    {
+        if (GameManager.Instance.debugCustomerBehavior)
+        {
+            Debug.Log(t);
+        }
+    }
     public void Init(DraggableRoom d)
     {
+        startPosition = transform.position;
         liveRoom = d;
-        wayPoints.Add(d.transform);
-        agent.SetDestination(wayPoints[0].position);
+        //wayPoint = d.transform;
+        //agent.SetDestination(wayPoint.position);
+        decideBehavior();
+        doBehavior();
+        agent.speed = RandomSpeed();
+    }
+
+    bool isStaying()
+    {
+        return behaviors[0].status == BehaviorStatus.stay;
+    }
+
+    public void doBehavior()
+    {
+        switch (behaviors[0].status)
+        {
+            case BehaviorStatus.none:
+
+                debugBehavior("start a new behavior");
+                if (behaviors[0].target == "bedroom")
+                {
+                    targetPosition = liveRoom.transform.position;
+                    agent.SetDestination(targetPosition);
+                    debugBehavior("will go to bedroom");
+                }
+                else if (behaviors[0].target == "home")
+                {
+                    targetPosition = startPosition;
+                    agent.SetDestination(startPosition);
+                    debugBehavior("will go to home");
+                    liveRoom.customerRelease();
+                }
+                else
+                {
+                    if (RoomManager.Instance.rooms.ContainsKey(behaviors[0].target))
+                    {
+                        Transform selectedRoom = RoomManager.Instance.rooms[behaviors[0].target][0].transform;
+                        targetPosition = selectedRoom.transform.position;
+                        agent.SetDestination(targetPosition);
+
+                        debugBehavior("will go to "+ behaviors[0].target);
+                    }
+                    else
+                    {
+                        debugBehavior("no room found as "+ behaviors[0].target);
+                    }
+                }
+                behaviors[0].status = BehaviorStatus.go;
+                break;
+            case BehaviorStatus.go:
+                currentStayTime = 0;
+                if(behaviors[0].target == "home")
+                {
+                    goto case BehaviorStatus.back;
+                }
+
+                debugBehavior("start stay");
+                behaviors[0].status = BehaviorStatus.stay;
+                break;
+            case BehaviorStatus.stay:
+                if (behaviors[0].returnRoom)
+                {
+
+                    targetPosition = liveRoom.transform.position;
+                    agent.SetDestination(targetPosition);
+                    behaviors[0].status = BehaviorStatus.back;
+                    debugBehavior("stop stay, start moving back bedroom");
+                    break;
+
+                }
+                else
+                {
+                    debugBehavior("stop stay");
+                    goto case BehaviorStatus.back;
+                }
+            case BehaviorStatus.back:
+                behaviors.RemoveAt(0);
+
+                debugBehavior("finished a behavior");
+                if (behaviors.Count == 0)
+                {
+
+                    debugBehavior("finished all behaviors");
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    doBehavior();
+                }
+                break;
+
+        }
+    }
+
+    public void decideBehavior()
+    {
+        behaviors.Add(new CustomerBehavior("bedroom", stayTime));
+        behaviors.Add(new CustomerBehavior("shop", stayTime));
+        behaviors.Add(new CustomerBehavior("spring", stayTime, false));
+        behaviors.Add(new CustomerBehavior("restaurant", stayTime));
+        behaviors.Add(new CustomerBehavior("home", 0));
+
+        bool willShop = Random.Range(0, 0.7f) <= 0.7f;
+        bool willSpring = Random.Range(0, 0.7f) <= 0.7f;
+        bool willEat = Random.Range(0, 0.7f) <= 0.7f;
+        if (willShop)
+        {
+
+        }
     }
     // Start is called before the first frame update
     void Awake()
@@ -27,6 +163,24 @@ public class Customer : MonoBehaviour
     void Update()
     {
         anim.SetFloat("Walk", agent.velocity.magnitude);
+        if (isStaying())
+        {
+            currentStayTime += Time.deltaTime;
+            if (currentStayTime >= behaviors[0].stayTime)
+            {
+                doBehavior();
+            }
+        }
+        else
+        {
+
+            float dist = Utils.distanceWithoutY(targetPosition, transform.position);
+            if (dist < 0.35f)
+            {
+                //arrived
+                doBehavior();
+            }
+        }
     }
 
 

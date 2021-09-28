@@ -1,3 +1,4 @@
+using Pool;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,12 +6,21 @@ using UnityEngine;
 
 public class RoomSelectionController : SelectionController
 {
-    protected override int allItemInfoCount()
+    protected override void Start()
     {
-        return RoomManager.Instance.roomInfoDict.Values.Count;
+        base.Start();
+        EventPool.OptIn("changeRegion", updateUI);
     }
-    protected override InfoBase itemInfo(int i)
+    protected override List<InfoBase> allItems()
     {
-        return RoomManager.Instance.roomInfoDict.Values.ToList()[i];
+        var res = new List<InfoBase>();
+        foreach(var info in RoomManager.Instance.roomInfoDict.Values)
+        {
+            if (info.regions.Contains(RegionManager.Instance.currentRegion.regionType))
+            {
+                res.Add(info);
+            }
+        }
+        return res;
     }
 }

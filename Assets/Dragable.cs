@@ -10,6 +10,12 @@ public abstract class Dragable : MonoBehaviour
     Camera dragCamera;
     Material material;
     public Collider placeCollider;
+    public string type;
+
+    public void Init(string t)
+    {
+        type = t;
+    }
     protected abstract bool canBuildItem();
     protected abstract void build();
 

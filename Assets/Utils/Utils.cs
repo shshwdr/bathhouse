@@ -10,6 +10,11 @@ public class Utils : MonoBehaviour
     {
         return Random.Range(0, 2) > 0;
     }
+    static public float distanceWithoutY(Vector3 p,Vector3 t)
+    {
+        Vector3 diff = p - t;
+        return new Vector3(diff.x, 0, diff.z).magnitude;
+    }
     static public bool arrayContains<T>(T[] array, T target)
     {
         foreach (T t in array)

@@ -13,6 +13,8 @@ public class AddMainItemButton : BuildItemButton
         //Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         //PlantsManager.Instance.shadowCollider.gameObject.SetActive(true);
         GameObject spawnInstance = Instantiate(prefab);
+        spawnInstance.GetComponent<DraggableItem>().Init(prefab.name,true);
+
         MouseManager.Instance.startDragItem(spawnInstance);
     }
     public override bool CanPurchaseItem()

@@ -1,4 +1,5 @@
 using LitJson;
+using Pool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class RegionManager : Singleton<RegionManager>
         currentRegionId += 1;
         currentRegionId %= regions.Count;
         setCamera();
+        EventPool.Trigger("changeRegion");
     }
 
     public void selectPreviousRegion()
@@ -30,6 +32,7 @@ public class RegionManager : Singleton<RegionManager>
         currentRegionId += regions.Count;
         currentRegionId %= regions.Count;
         setCamera();
+        EventPool.Trigger("changeRegion");
     }
 
     public void setCamera()
