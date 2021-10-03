@@ -40,5 +40,29 @@
         "description":"Duck",
         "rooms":["spring"]
       }
+    ],
+    "resources":[
+      {
+        "name":"stick",
+        "displayName":"Stick",
+        "description":"Stick"
+      },
+      {
+        "name":"stone",
+        "displayName":"Stick",
+        "description":"Stick"
+      },
+      {
+        "name":"wood",
+        "displayName":"Stick",
+        "description":"Stick"
+      }
+    ],
+    "tool":[
+      {
+        "name":"axe",
+        "displayName":"Axe",
+        "description":"Axe"
+      }
     ]
   }

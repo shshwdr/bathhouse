@@ -13,6 +13,12 @@ public class BuildModeManager : Singleton<BuildModeManager>
 
     public void finishCurrentRoom()
     {
+        //if (!currentRoom.isValid())
+        //{
+
+        //    return;
+        //}
+
         RegionManager.Instance.currentRegion.addRoom(currentRoom);
         RoomManager.Instance.addRoom(currentRoom);
         currentRoom = null;

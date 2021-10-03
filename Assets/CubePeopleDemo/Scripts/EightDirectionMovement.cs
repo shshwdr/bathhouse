@@ -14,17 +14,13 @@ namespace CubePeople
         float angle;
 
         Quaternion targetRotation;
-        public Transform cam; //Transform cam;
+        
+        public Transform renderObject; //Transform cam;
 
         FollowTarget ft;
 
         void Start()
         {
-            //cam = Camera.main.transform;
-            if (cam.GetComponent<FollowTarget>())
-            {
-                //ft = cam.GetComponent<FollowTarget>();
-            }
 
         }
 
@@ -57,19 +53,19 @@ namespace CubePeople
         {
             if (false && ft != null && ft.camRotation)
             {
-                transform.rotation = Quaternion.Euler(0, input.x * 1.5f, 0) * transform.rotation;
+                renderObject.rotation = Quaternion.Euler(0, input.x * 1.5f, 0) * renderObject.rotation;
             }
             else
             {
                 targetRotation = Quaternion.Euler(0, angle, 0);
             }
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+            renderObject.rotation = Quaternion.Slerp(renderObject.rotation, targetRotation, turnSpeed * Time.deltaTime);
         }
 
         void Move()
         {
-            transform.position += transform.forward * velocity * Time.deltaTime;
+            transform.position += renderObject.forward * velocity * Time.deltaTime;
         }
     }
 }
