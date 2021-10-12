@@ -6,25 +6,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ItemInfo
+public class ItemInfo: InfoBase
 {
-    public string name;
-    public string displayName;
-    public string pickup;
-    public float pickupTime;
-    public string description;
     public int amount;
-    public string dialogue;
-    public string variable;
-    public string conditionInventory;
-    public string animation;
-    public bool noItemCollected;
-    public bool isImportant;
-
+    public int startValue;
 }
 public class AllItemInfo
 {
-    public List<ItemInfo> allItem;
+    public List<ItemInfo> resources;
+    public List<ItemInfo> tool; 
 }
 public class Inventory : Singleton<Inventory>
 {
@@ -37,7 +27,7 @@ public class Inventory : Singleton<Inventory>
     {
         inventoryUnlockedCellCount++;
 
-        EventPool.Trigger("updateInventory");
+        EventPool.Trigger("inventoryChanged");
     }
     public bool canAddItem(string itemName, int value = 1)
     {
@@ -73,7 +63,7 @@ public class Inventory : Singleton<Inventory>
 
         selectedItemName = "";
 
-        EventPool.Trigger("updateInventory");
+        EventPool.Trigger("inventoryChanged");
     }
 
     public void select(string name)
@@ -87,7 +77,7 @@ public class Inventory : Singleton<Inventory>
 
             updateSelectedItem(name);
         }
-        EventPool.Trigger("updateInventory");
+        EventPool.Trigger("inventoryChanged");
     }
 
     public void addItem(string itemName)
@@ -108,13 +98,17 @@ public class Inventory : Singleton<Inventory>
         //{
         //    itemDict[itemName] = value;
         //}
-        EventPool.Trigger("updateInventory");
+        EventPool.Trigger("inventoryChanged");
     }
 
     public void consumeItem(string itemName, int value = 1)
     {
         if(!itemDict.ContainsKey(itemName) || itemDict[itemName].amount < value)
         {
+            if (CheatManager.Instance.hasUnlimitResource)
+            {
+                return;
+            }
             Debug.LogError("not enough item to consume");
             return;
         }
@@ -124,7 +118,7 @@ public class Inventory : Singleton<Inventory>
         //{
         //    itemValueDict.Remove(itemName);
         //}
-        EventPool.Trigger("updateInventory");
+        EventPool.Trigger("inventoryChanged");
     }
 
 
@@ -134,6 +128,10 @@ public class Inventory : Singleton<Inventory>
     }
     public bool hasItemAmount(string itemName,int amount)
     {
+        if (CheatManager.Instance.hasUnlimitResource)
+        {
+            return true;
+        }
         return itemDict.ContainsKey(itemName) && itemDict[itemName].amount >= amount;
     }
     public bool hasItem(string itemName)
@@ -143,11 +141,12 @@ public class Inventory : Singleton<Inventory>
     // Start is called before the first frame update
     void Awake()
     {
-        string text = Resources.Load<TextAsset>("json/Item").text;
+        string text = Resources.Load<TextAsset>("json/Inventory").text;
         var allNPCs = JsonMapper.ToObject<AllItemInfo>(text);
-        foreach (ItemInfo info in allNPCs.allItem)
+        foreach (ItemInfo info in allNPCs.resources)
         {
             itemDict[info.name] = info;
+            info.amount = info.startValue;
         }
     }
 
@@ -158,7 +157,7 @@ public class Inventory : Singleton<Inventory>
         {
             foreach(var key in itemDict.Keys)
             {
-                if (!itemDict[key].noItemCollected)
+                //if (!itemDict[key].noItemCollected)
                 {
                     itemDict[key].amount += 1;
                 }

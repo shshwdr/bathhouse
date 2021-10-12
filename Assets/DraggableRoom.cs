@@ -7,16 +7,42 @@ public class DraggableRoom : Dragable
     public bool occupied;
     public Cinemachine.CinemachineVirtualCamera buildCamera;
     public List<DraggableItem> items = new List<DraggableItem>();
-
     public DraggableItem mainItem;
     int maxItem = 2;
+    public bool isPreBuild = false;
+    public bool isEditing = true;
+
+    public List<string> allLikeableItems()
+    {
+        List<string> res=new List<string>();
+
+        res.Add(info.name);
+
+        res.Add(mainItem.info.name);
+
+        foreach(var item in items)
+        {
+
+            res.Add(item.info.name);
+        }
+
+        return res;
+    }
     protected override void build()
     {
         //RegionManager.Instance.currentRegion.addRoom(this);
+        getIntoEditMode();
+        consumeRequirements();
+    }
+
+    public void getIntoEditMode()
+    {
+
         BuildModeManager.Instance.buildRoom(this);
         Doozy.Engine.GameEventMessage.SendEvent("addItem");
         buildCamera.gameObject.SetActive(true);
     }
+
 
     public void setMainItem(DraggableItem item)
     {
@@ -25,11 +51,18 @@ public class DraggableRoom : Dragable
             Destroy(mainItem.gameObject);
         }
         mainItem = item;
+        item.room = this;
     }
 
     public void addItem(DraggableItem item)
     {
         items.Add(item);
+        item.room = this;
+    }
+
+    public bool canAddNewItem()
+    {
+        return items.Count < maxItem;
     }
 
     public void removeItem(DraggableItem item)
@@ -85,12 +118,26 @@ public class DraggableRoom : Dragable
 
         foreach(var item in items)
         {
-            Destroy(item.gameObject);
+            item.removeDragItem();
         }
         if (mainItem)
         {
-
-            Destroy(mainItem.gameObject);
+            mainItem.removeDragItem();
         }
+    }
+    protected override void Start()
+    {
+        base.Start();
+        if (isPreBuild)
+        {
+            isDragging = false;
+            finishBuild();
+        }
+    }
+    public void finishBuild()
+    {
+        isEditing = false;
+        RegionManager.Instance.currentRegion.addRoom(this);
+        RoomManager.Instance.addRoom(this);
     }
 }

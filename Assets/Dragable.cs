@@ -11,10 +11,33 @@ public abstract class Dragable : MonoBehaviour
     Material material;
     public Collider placeCollider;
     public string type;
+    public InfoBase info;
+    public bool isBuilt = false;
 
-    public void Init(string t)
+    public void consumeRequirements()
+    {
+        InfoWithRequirementBase infoWithRequirement = (InfoWithRequirementBase)info;
+        var requirements = infoWithRequirement.requireResources;
+        foreach(var req in requirements)
+        {
+            Inventory.Instance.consumeItem(req.key, req.amount);
+        }
+    }
+    public void addBackRequirements()
+    {
+        InfoWithRequirementBase infoWithRequirement = (InfoWithRequirementBase)info;
+        var requirements = infoWithRequirement.requireResources;
+        foreach (var req in requirements)
+        {
+            Inventory.Instance.addItem(req.key, req.amount);
+        }
+    }
+    
+
+    public void Init(string t,InfoBase i)
     {
         type = t;
+        info = i;
     }
     protected abstract bool canBuildItem();
     protected abstract void build();
@@ -61,8 +84,13 @@ public abstract class Dragable : MonoBehaviour
         }
     }
 
-    public void cancelDragItem()
+    public virtual void cancelDragItem()
     {
         MouseManager.Instance.cancelDragItem(gameObject);
+    }
+    public void removeDragItem()
+    {
+        addBackRequirements();
+        Destroy(gameObject);
     }
 }

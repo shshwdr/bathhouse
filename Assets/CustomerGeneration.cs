@@ -34,10 +34,10 @@ public class CustomerGeneration : MonoBehaviour
             {
                 var selectedRoom = availableBedrooms[0];
                 selectedRoom.customerOccupy();
-                GameObject prefab = Resources.Load<GameObject>("NPC/customer");
                 Transform generationTransform = generationPositionParent.GetChild(Random.Range(0, generationPositionParent.childCount));
-                GameObject go = Instantiate<GameObject>(prefab, generationTransform.position,Quaternion.identity);
-                go.GetComponent<Customer>().Init(selectedRoom);
+
+                GameObject go = CustomerManager.Instance.createCustomer(generationTransform.position, selectedRoom);
+                
 
             }
         }

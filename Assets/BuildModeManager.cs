@@ -18,16 +18,18 @@ public class BuildModeManager : Singleton<BuildModeManager>
 
         //    return;
         //}
-
-        RegionManager.Instance.currentRegion.addRoom(currentRoom);
-        RoomManager.Instance.addRoom(currentRoom);
+        currentRoom.finishBuild();
         currentRoom = null;
     }
 
     public void cancelCurrentRoom()
     {
-        Destroy(currentRoom.gameObject);
-        currentRoom = null;
+        if (currentRoom)
+        {
+            currentRoom.addBackRequirements();
+            Destroy(currentRoom.gameObject);
+            currentRoom = null;
+        }
     }
     // Start is called before the first frame update
     void Start()

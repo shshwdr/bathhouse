@@ -40,6 +40,10 @@ public class Utils : MonoBehaviour
         float closestDistance = float.MaxValue;
         for (int i = 0; i < candicateTransforms.Count; i++)
         {
+            if (!candicateTransforms[i])
+            {
+                continue;
+            }
             float distance = (candicateTransforms[i].transform.position - targetTransform.position).magnitude;
             if (distance < closestDistance)
             {

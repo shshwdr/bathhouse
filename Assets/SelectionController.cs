@@ -8,9 +8,14 @@ public abstract class SelectionController : MonoBehaviour
     public Transform contentParent;
 
     protected abstract List<InfoBase> allItems();
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        if (!contentParent)
+        {
+            contentParent = transform;
+        }
         updateUI();
     }
     public void updateUI()

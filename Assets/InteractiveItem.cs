@@ -11,12 +11,17 @@ public class InteractiveItem:MonoBehaviour
     public GameObject pickUI;
     public TMP_Text interactiveText;
     public bool isInteractiveDisabled;
-    PlayerPickup playerPickup;
+    protected PlayerPickup playerPickup;
     protected SpriteRenderer renderer;
     //public GameObject pickingUpBar;
     // Start is called before the first frame update
     public virtual void Start()
     {
+        if (!pickUI)
+        {
+
+            pickUI = transform.Find("hud").Find("pickUI").gameObject;
+        }
         hidePickupUI();
     }
 
@@ -76,7 +81,11 @@ public class InteractiveItem:MonoBehaviour
         {
             return;
         }
-        //pickUI.SetActive(false);
+        if (pickUI)
+        {
+
+            pickUI.SetActive(false);
+        }
 
 
     }
@@ -93,14 +102,22 @@ public class InteractiveItem:MonoBehaviour
         }
         prepareUI();
         //show pick up
-        //pickUI.SetActive(true);
+        if (pickUI)
+        {
+
+            pickUI.SetActive(true);
+        }
     }
     public void hidePickupUI()
     {
 
         //pickingUpBar.SetActive(false);
         //show pick up
-        //pickUI.SetActive(false);
+        if (pickUI)
+        {
+
+            pickUI.SetActive(false);
+        }
     }
 
     public void disableInteractive()

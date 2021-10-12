@@ -23,7 +23,7 @@ public class RegionController : MonoBehaviour
     public bool canPlaceRoom(DraggableRoom room)
     {
         var roomCollider = room.placeCollider;
-        if (!regionCollider.bounds.Contains(roomCollider.bounds.min) ||!regionCollider.bounds.Contains(roomCollider.bounds.max))
+        if (!Utils.colliderContainFromTop(regionCollider, roomCollider))
         {
             return false;
         }

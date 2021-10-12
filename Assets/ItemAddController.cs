@@ -5,10 +5,21 @@ using UnityEngine;
 
 public class ItemAddController : SelectionController
 {
+    public bool isMainItem;
     protected override List<InfoBase> allItems()
     {
         var res = new List<InfoBase>();
-        foreach (var info in RoomItemManager.Instance.mainItemInfoDict.Values)
+        Dictionary<string,RoomItemInfo>.ValueCollection allInfos;
+        if (isMainItem)
+        {
+            allInfos = RoomItemManager.Instance.mainItemInfoDict.Values;
+        }
+        else
+        {
+
+            allInfos = RoomItemManager.Instance.decoItemInfoDict.Values;
+        }
+        foreach (var info in allInfos)
         {
             if (info.rooms.Contains(BuildModeManager.Instance.currentRoom.type))
             {

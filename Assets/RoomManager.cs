@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class KeyValueBase
+{
+    public string key;
+    public int amount;
+
+}
+
 public class InfoBase
 {
     public string name;
@@ -10,7 +17,12 @@ public class InfoBase
     public string description;
 }
 
-public class RoomInfo: InfoBase
+public class InfoWithRequirementBase: InfoBase
+{
+    public KeyValueBase[] requireResources;
+}
+
+public class RoomInfo: InfoWithRequirementBase
 {
     public string[] regions;
 

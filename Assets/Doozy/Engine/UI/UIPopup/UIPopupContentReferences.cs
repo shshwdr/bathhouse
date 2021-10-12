@@ -17,6 +17,18 @@ using TMPro;
 
 namespace Doozy.Engine.UI
 {
+    public class PopupButtonData
+    {
+       public UnityAction buttonAction;
+        public string buttonLabelText;
+        public bool shouldHideOnButton;
+        public PopupButtonData(UnityAction ac, string te = null, bool hide = true)
+        {
+            buttonAction = ac;
+            buttonLabelText = te;
+            shouldHideOnButton = hide;
+        }
+    }
     /// <summary>
     ///     Contains references to UIPopup elements that can be customized (Labels, Images and Buttons)
     /// </summary>
@@ -82,6 +94,31 @@ namespace Doozy.Engine.UI
                 if (button == null) continue;
                 if (callbacks[i] == null) continue;
                 button.OnClick.OnTrigger.Event.AddListener(callbacks[i]);
+            }
+        }
+
+        public void SetButtonsData(PopupButtonData[] buttonData, UnityAction hidePopup)
+        {
+            if (buttonData == null || buttonData.Length == 0 || !HasButtons) return;
+            for (int i = 0; i < Buttons.Count; i++)
+            {
+                UIButton button = Buttons[i];
+                if (button == null) continue;
+                if (buttonData.Length <= i || buttonData[i] == null)
+                {
+                    button.gameObject.SetActive(false);
+                    continue;
+                }
+
+                button.gameObject.SetActive(true);
+                button.OnClick.OnTrigger.Event.AddListener(delegate { 
+                    buttonData[i].buttonAction();
+                    if (buttonData[i].shouldHideOnButton)
+                    {
+                        hidePopup();
+                    }
+                });
+                button.SetLabelText(buttonData[i].buttonLabelText);
             }
         }
 

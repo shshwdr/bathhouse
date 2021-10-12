@@ -18,7 +18,7 @@ public class PlayerPickup : MonoBehaviour
 
     private void Awake()
     {
-        pickingUpBar.SetActive(false);
+        //pickingUpBar.SetActive(false);
         animator = GetComponentInChildren<Animator>();
         triggerCollider = GetComponent<CircleCollider2D>();
 
@@ -60,6 +60,7 @@ public class PlayerPickup : MonoBehaviour
             if (lastClosest)
             {
                 lastClosest.hidePickupUI();
+                lastClosest = null;
             }
             return;
         }

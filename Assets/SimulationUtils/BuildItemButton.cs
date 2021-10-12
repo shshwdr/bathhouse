@@ -8,7 +8,7 @@ public abstract class BuildItemButton : MonoBehaviour
 {
 
     string itemName;
-    InfoBase itemInfo;
+    protected InfoBase itemInfo;
     protected GameObject prefab;
 
     // Start is called before the first frame update
@@ -16,8 +16,22 @@ public abstract class BuildItemButton : MonoBehaviour
     {
     }
 
+    public bool hasEnoughRequirementItems()
+    {
+        InfoWithRequirementBase infoWithRequirement = (InfoWithRequirementBase)itemInfo;
+        var requirements = infoWithRequirement.requireResources;
+        foreach (var req in requirements)
+        {
+           if(!Inventory.Instance.hasItemAmount(req.key, req.amount))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public abstract string itemType();
-    public void init(InfoBase info)
+    public virtual void init(InfoBase info)
     {
         itemName = info.name;
         itemInfo = info;

@@ -35,7 +35,7 @@ public class SelectCell : MonoBehaviour
         nameText.text = info.displayName;
         image.sprite = Resources.Load<Sprite>("icon/" + button.itemType() + "/" + itemName);
         //image.color = plant.GetComponent<SpriteRenderer>().color;
-
+        
     }
 
     public void OnMouseDown()

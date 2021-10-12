@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace Doozy.Engine.UI
 {
+
     /// <inheritdoc />
     /// <summary> Contains a pair of PopupName and UIPopup prefab reference, used by the UIPopupDatabase as its data entries </summary>
     [Serializable]

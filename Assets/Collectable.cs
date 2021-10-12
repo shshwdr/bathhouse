@@ -8,13 +8,17 @@ using UnityEngine.UI;
 public class Collectable : InteractiveItem
 {
     public float pickingUpTime;
-    public string itemName = "leave";
+    public string itemName = "";
     public bool shouldHideAtBeginning = false;
     ItemInfo info;
 
     public Sprite[] randomSprites;
     void Awake()
     {
+        if (itemName.Length == 0)
+        {
+            itemName = gameObject.name;
+        }
         //QuestManager.Instance.itemsDict[name] = gameObject;
         if (shouldHideAtBeginning)
         {
@@ -28,14 +32,14 @@ public class Collectable : InteractiveItem
     }
     public override void Start()
     {
+        base.Start();
         if (!Inventory.Instance.itemDict.ContainsKey(itemName))
         {
             Debug.Log("do not have key " + itemName);
         }
         info = Inventory.Instance.itemDict[itemName];
-        base.Start();
         //interactiveText.text = info.pickup;
-        pickingUpTime = info.pickupTime;
+        //pickingUpTime = info.pickupTime;
     }
 
     
@@ -50,10 +54,10 @@ public class Collectable : InteractiveItem
 
     protected override bool canInteract()
     {
-        if(info.conditionInventory != null)
-        {
-            return Inventory.Instance.hasItem(info.conditionInventory);
-        }
+        //if(info.conditionInventory != null)
+        //{
+        //    return Inventory.Instance.hasItem(info.conditionInventory);
+        //}
         return true;
     }
     public override void interact(PlayerPickup player)
@@ -63,16 +67,16 @@ public class Collectable : InteractiveItem
         {
             return;
         }
-        player.pickingUpBar.SetActive(true);
+        //player.pickingUpBar.SetActive(true);
         //showPickingUpBar(player.pickingUpBar);
-        if (info.animation!=null)
-        {
-            player.startPlayAnimation(info.animation);
-        }
-        else
-        {
-            player.startPickupItem();
-        }
+        //if (info.animation!=null)
+        //{
+        //    player.startPlayAnimation(info.animation);
+        //}
+        //else
+        //{
+        //    player.startPickupItem();
+        //}
         StartCoroutine(pickupItem(player));
     }
 
@@ -80,30 +84,30 @@ public class Collectable : InteractiveItem
     {
 
         yield return new WaitForSeconds(pickingUpTime);
-        if (info.variable!=null)
-        {
-            DialogueLua.SetVariable(info.variable, DialogueLua.GetVariable(info.variable).asInt + 1);
-        }
-        if(!info.noItemCollected)
-        {
-
-            Inventory.Instance.addItem(itemName, 1);
-        }
-        //QuestManager.Instance.addQuestItem(itemName, 1);
-        //DialogueLua.SetVariable("cleanedLeaves", DialogueLua.GetVariable("cleanedLeaves").asInt + 1);
-        if (info.animation != null)
-        {
-            player.finishPlayAnimation(info.animation);
-        }
-        else
-        {
+        //if (info.variable!=null)
+        //{
+        //    DialogueLua.SetVariable(info.variable, DialogueLua.GetVariable(info.variable).asInt + 1);
+        //}
+        //if(!info.noItemCollected)
+        //{
+        playerPickup.removeCanPickup(this);
+        Inventory.Instance.addItem(itemName, 1);
+        //}
+        ////QuestManager.Instance.addQuestItem(itemName, 1);
+        ////DialogueLua.SetVariable("cleanedLeaves", DialogueLua.GetVariable("cleanedLeaves").asInt + 1);
+        //if (info.animation != null)
+        //{
+        //    player.finishPlayAnimation(info.animation);
+        //}
+        //else
+        //{
             player.finishPickupItem();
-        }
-        player.pickingUpBar.SetActive(false);
-        if (info.dialogue!=null)
-        {
-            DialogueManager.instance.StartConversation(info.dialogue);
-        }
+        //}
+        //player.pickingUpBar.SetActive(false);
+        //if (info.dialogue!=null)
+        //{
+        //    DialogueManager.instance.StartConversation(info.dialogue);
+        //}
         Destroy(gameObject);
     }
 }

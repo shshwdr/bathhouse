@@ -5,21 +5,33 @@
         "name": "bed",
         "displayName":"Bed",
         "description":"Bed",
+        "requireResources":[
+          {"key":"stick","amount":2}
+        ],
         "rooms":["bedroom"]
       },{
         "name": "bottle",
         "displayName":"Bottle",
         "description":"Bottle",
+        "requireResources":[
+          {"key":"stick","amount":2}
+        ],
         "rooms":["bedroom","shop","restaurant"]
       },{
         "name": "springWater",
         "displayName":"Normal Spring Water",
         "description":"Normal Spring Water",
+        "requireResources":[
+          {"key":"stone","amount":2}
+        ],
         "rooms":["spring"]
       },{
         "name": "saltSpringWater",
         "displayName":"Salt Spring Water",
         "description":"Salt Spring Water",
+        "requireResources":[
+          {"key":"stone","amount":2}
+        ],
         "rooms":["spring"]
       }
     ],
@@ -28,41 +40,26 @@
         "name": "tree",
         "displayName":"Tree",
         "description":"Tree",
+        "requireResources":[
+          {"key":"stick","amount":2}
+        ],
         "rooms":["bedroom"]
       },{
         "name": "lamp",
         "displayName":"Lamp",
         "description":"Lamp",
+        "requireResources":[
+          {"key":"stick","amount":2}
+        ],
         "rooms":["bedroom"]
       },{
         "name": "duck",
         "displayName":"Duck",
         "description":"Duck",
+        "requireResources":[
+          {"key":"stick","amount":2}
+        ],
         "rooms":["spring"]
-      }
-    ],
-    "resources":[
-      {
-        "name":"stick",
-        "displayName":"Stick",
-        "description":"Stick"
-      },
-      {
-        "name":"stone",
-        "displayName":"Stick",
-        "description":"Stick"
-      },
-      {
-        "name":"wood",
-        "displayName":"Stick",
-        "description":"Stick"
-      }
-    ],
-    "tool":[
-      {
-        "name":"axe",
-        "displayName":"Axe",
-        "description":"Axe"
       }
     ]
   }

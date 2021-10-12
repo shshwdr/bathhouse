@@ -1,3 +1,4 @@
+using Pool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,26 @@ public class Customer : MonoBehaviour
     List<CustomerBehavior> behaviors = new List<CustomerBehavior>();
     Vector3 startPosition;
 
+    public GameObject customerCamera;
+    public string currentDoing;
+    public List<string> logs;
+
+    public string customerName;
+    public string customerType;
+    public CustomerInfo customerInfo;
+
+    HashSet<DraggableRoom> visitedRoom = new HashSet<DraggableRoom>();
+
+    public void selectCustomerInfo()
+    {
+        customerCamera.SetActive(true);
+    }
+
+    public void deselectCustomerInfo()
+    {
+        customerCamera.SetActive(false);
+    }
+
     void debugBehavior(string t)
     {
         if (GameManager.Instance.debugCustomerBehavior)
@@ -38,15 +59,21 @@ public class Customer : MonoBehaviour
             Debug.Log(t);
         }
     }
-    public void Init(DraggableRoom d)
+
+
+    public void Init(DraggableRoom d, string n, string t)
     {
+        customerName = n;
+        customerType = t;
         startPosition = transform.position;
         liveRoom = d;
+        customerInfo = CustomerManager.Instance.customerInfoDict[customerType];
         //wayPoint = d.transform;
         //agent.SetDestination(wayPoint.position);
         decideBehavior();
         doBehavior();
         agent.speed = RandomSpeed();
+        logBehavior(customerName+" shows up");
     }
 
     bool isStaying()
@@ -54,21 +81,85 @@ public class Customer : MonoBehaviour
         return behaviors[0].status == BehaviorStatus.stay;
     }
 
+    void changeCurrentDoing(string current)
+    {
+
+        if (current != null)
+        {
+
+            currentDoing = current;
+        }
+        EventPool.Trigger<string>("updateOneCustomer", customerName);
+    }
+    void logBehavior(string logText)
+    {
+        if (logText!=null)
+        {
+
+            logs.Add(logText);
+        }
+        EventPool.Trigger<string>("updateOneCustomer", customerName);
+    }
+
+
+    DraggableRoom pickTarget(string targetName)
+    {
+
+        int favoritePoint = 0;
+        DraggableRoom res = null;
+        if (!RoomManager.Instance.rooms.ContainsKey(behaviors[0].target))
+        {
+            return res;
+        }
+        for(int i = 0;i< RoomManager.Instance.rooms[behaviors[0].target].Count; i++)
+        {
+            var room = RoomManager.Instance.rooms[behaviors[0].target][i];
+            if (visitedRoom.Contains(room))
+            {
+                continue;
+            }
+            int tempPoint = 0;
+
+            foreach(var item in room.allLikeableItems())
+            {
+                foreach (var fav in customerInfo.favoriteItems)
+                {
+                    if(item == fav.key)
+                    {
+                        tempPoint += fav.amount;
+                    }
+                }
+            }
+
+            if (tempPoint > favoritePoint)
+            {
+                res = room;
+                favoritePoint = tempPoint;
+            }
+        }
+
+        debugBehavior(customerName + " " + customerType + " picked " + res + " with score " + favoritePoint);
+
+        return res;
+    }
+
     public void doBehavior()
     {
+        bool skipNextLog = false;
         switch (behaviors[0].status)
         {
             case BehaviorStatus.none:
-
                 debugBehavior("start a new behavior");
                 if (behaviors[0].target == "bedroom")
                 {
+                    changeCurrentDoing("Go check in");
                     targetPosition = liveRoom.transform.position;
                     agent.SetDestination(targetPosition);
                     debugBehavior("will go to bedroom");
                 }
                 else if (behaviors[0].target == "home")
                 {
+                    changeCurrentDoing("Go back home");
                     targetPosition = startPosition;
                     agent.SetDestination(startPosition);
                     debugBehavior("will go to home");
@@ -76,9 +167,11 @@ public class Customer : MonoBehaviour
                 }
                 else
                 {
-                    if (RoomManager.Instance.rooms.ContainsKey(behaviors[0].target))
+                    var selectTarget = pickTarget(behaviors[0].target);
+                    if (selectTarget)
                     {
-                        Transform selectedRoom = RoomManager.Instance.rooms[behaviors[0].target][0].transform;
+                        changeCurrentDoing("Go to " + selectTarget.info.displayName);
+                        Transform selectedRoom = selectTarget.transform;
                         targetPosition = selectedRoom.transform.position;
                         agent.SetDestination(targetPosition);
 
@@ -86,12 +179,17 @@ public class Customer : MonoBehaviour
                     }
                     else
                     {
+                        logBehavior("Wants to " + behaviors[0].target + " but failed to find one");
                         debugBehavior("no room found as "+ behaviors[0].target);
+                        skipNextLog = true;
+                        goto case BehaviorStatus.stay;
                     }
                 }
                 behaviors[0].status = BehaviorStatus.go;
                 break;
             case BehaviorStatus.go:
+                changeCurrentDoing("stays in " + behaviors[0].target);
+                logBehavior("arrives " + behaviors[0].target);
                 currentStayTime = 0;
                 if(behaviors[0].target == "home")
                 {
@@ -102,9 +200,16 @@ public class Customer : MonoBehaviour
                 behaviors[0].status = BehaviorStatus.stay;
                 break;
             case BehaviorStatus.stay:
+                if (!skipNextLog)
+                {
+
+                    logBehavior("enjoyed staying in " + behaviors[0].target);
+                    skipNextLog = false;
+                }
                 if (behaviors[0].returnRoom)
                 {
 
+                    changeCurrentDoing("go back to bedroom");
                     targetPosition = liveRoom.transform.position;
                     agent.SetDestination(targetPosition);
                     behaviors[0].status = BehaviorStatus.back;
@@ -125,7 +230,9 @@ public class Customer : MonoBehaviour
                 {
 
                     debugBehavior("finished all behaviors");
-                    Destroy(gameObject);
+                    changeCurrentDoing("Left");
+                    //logBehavior(customerName + " get back home");
+                    CustomerManager.Instance.removeCustomer(gameObject);
                 }
                 else
                 {

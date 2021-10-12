@@ -2,7 +2,7 @@ using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class RoomItemInfo : InfoBase
+public class RoomItemInfo : InfoWithRequirementBase
 {
     public string[] rooms;
 
@@ -15,6 +15,7 @@ public class AllRoomItemInfo
 public class RoomItemManager : Singleton<RoomItemManager>
 {
     public Dictionary<string, RoomItemInfo> mainItemInfoDict = new Dictionary<string, RoomItemInfo>();
+    public Dictionary<string, RoomItemInfo> decoItemInfoDict = new Dictionary<string, RoomItemInfo>();
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,6 +24,10 @@ public class RoomItemManager : Singleton<RoomItemManager>
         foreach (RoomItemInfo info in allNPCs.allMainItem)
         {
             mainItemInfoDict[info.name] = info;
+        }
+        foreach (RoomItemInfo info in allNPCs.allDecorations)
+        {
+            decoItemInfoDict[info.name] = info;
         }
     }
 
