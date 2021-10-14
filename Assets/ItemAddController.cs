@@ -21,7 +21,7 @@ public class ItemAddController : SelectionController
         }
         foreach (var info in allInfos)
         {
-            //if (info.rooms.Contains(BuildModeManager.Instance.currentRoom.type))
+            if (info.isUnlocked)
             {
                 res.Add(info);
             }

@@ -14,9 +14,9 @@ TagManager:
   - item
   - 
   - player
-  - 
-  - 
-  - 
+  - ground
+  - itemNav
+  - groundNav
   - 
   - 
   - 

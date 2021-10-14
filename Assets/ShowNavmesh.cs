@@ -8,13 +8,13 @@ public class ShowNavmesh : Singleton<ShowNavmesh>
 	bool isShowMesh = false;
 	void Start()
 	{
-		EventPool.OptIn("changeItem", ShowMesh);
+		//EventPool.OptIn("changeItem", ShowMesh);
 		//ShowMesh();
 	}
 
 	public IEnumerator show()
     {
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0.1f);
 		// NavMesh.CalculateTriangulation returns a NavMeshTriangulation object.
 		NavMeshTriangulation meshData = NavMesh.CalculateTriangulation();
 

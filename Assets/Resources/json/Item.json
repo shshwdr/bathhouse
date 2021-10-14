@@ -5,6 +5,7 @@
         "name": "bed",
         "displayName":"Bed",
         "catelog":"bed",
+        "isUnlocked":true,
         "description":"Bed",
         "earning":10,
         "requireResources":[
@@ -17,6 +18,7 @@
         "earning":12,
         "catelog":"bed",
         "description":"Bottle",
+        "isUnlocked":false,
         "requireResources":[
           {"key":"stick","amount":2}
         ],
@@ -25,6 +27,7 @@
         "name": "springWater",
         "catelog":"spring",
         "earning":10,
+        "isUnlocked":true,
         "displayName":"Normal Spring Water",
         "description":"Normal Spring Water",
         "requireResources":[
@@ -34,6 +37,7 @@
       },{
         "name": "saltSpringWater",
         "catelog":"spring",
+        "isUnlocked":false,
         "earning":12,
         "displayName":"Salt Spring Water",
         "description":"Salt Spring Water",
@@ -45,6 +49,7 @@
         "name": "shop",
         "displayName":"Shop",
         "catelog":"shop",
+        "isUnlocked":false,
         "earning":20,
         "description":"Shop",
         "requireResources":[
@@ -54,6 +59,7 @@
       },{
         "name": "restaurant",
         "earning":20,
+        "isUnlocked":false,
         "displayName":"restaurant",
         "catelog":"restaurant",
         "description":"restaurant",
@@ -69,6 +75,7 @@
         "catelog":"decoration",
         "affectRadius":10,
         "earning":5,
+        "isUnlocked":true,
         "displayName":"Tree",
         "description":"Tree",
         "requireResources":[
@@ -78,6 +85,7 @@
       },{
         "name": "lamp",
         "earning":10,
+        "isUnlocked":false,
         "affectRadius":10,
         "catelog":"decoration",
         "displayName":"Lamp",
@@ -89,6 +97,7 @@
       },{
         "name": "duck",
         "earning":15,
+        "isUnlocked":false,
         "affectRadius":20,
         "catelog":"decoration",
         "displayName":"Duck",

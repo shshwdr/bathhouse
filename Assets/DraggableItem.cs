@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DraggableItem : Dragable
 {
@@ -57,6 +58,17 @@ public class DraggableItem : Dragable
         effectRangeItem.hideEffectOnAffectedItems();
 
         consumeRequirements();
+        StartCoroutine(renderNavAsync());
+    }
+
+    IEnumerator renderNavAsync()
+    {
+
+        NavMeshSurface nm = GameObject.FindObjectOfType<NavMeshSurface>();
+        //nm.BuildNavMesh();
+        yield return nm.UpdateNavMesh(nm.navMeshData);
+        ShowNavmesh.Instance.ShowMesh();
+
     }
 
     public override void cancelDragItem()

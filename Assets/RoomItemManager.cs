@@ -13,6 +13,7 @@ public class RoomItemInfo : InfoWithRequirementBase
 {
     public string catelog;
     public int earning;
+    public bool isUnlocked;
 
 }
 public class AllRoomItemInfo
@@ -54,7 +55,7 @@ public class RoomItemManager : Singleton<RoomItemManager>
     public void removeItem(DraggableItem item)
     {
         items[item.catelog].Remove(item);
-        ShowNavmesh.Instance.ShowMesh();
+        //ShowNavmesh.Instance.ShowMesh();
     }
 
     public List<DraggableItem> availableBedItem()

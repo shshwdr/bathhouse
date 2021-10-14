@@ -27,6 +27,7 @@ public class AffectRange : MonoBehaviour
             otherItem.affectedItems.Add(parentItem);
             otherItem.GetComponentInChildren<Renderer>().material.color = Color.yellow;
         }
+        
     }
 
     private void OnTriggerExit(Collider other)
