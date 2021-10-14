@@ -4,7 +4,9 @@
       {
         "name": "bed",
         "displayName":"Bed",
+        "catelog":"bed",
         "description":"Bed",
+        "earning":10,
         "requireResources":[
           {"key":"stick","amount":2}
         ],
@@ -12,6 +14,8 @@
       },{
         "name": "bottle",
         "displayName":"Bottle",
+        "earning":12,
+        "catelog":"bed",
         "description":"Bottle",
         "requireResources":[
           {"key":"stick","amount":2}
@@ -19,6 +23,8 @@
         "rooms":["bedroom","shop","restaurant"]
       },{
         "name": "springWater",
+        "catelog":"spring",
+        "earning":10,
         "displayName":"Normal Spring Water",
         "description":"Normal Spring Water",
         "requireResources":[
@@ -27,17 +33,42 @@
         "rooms":["spring"]
       },{
         "name": "saltSpringWater",
+        "catelog":"spring",
+        "earning":12,
         "displayName":"Salt Spring Water",
         "description":"Salt Spring Water",
         "requireResources":[
           {"key":"stone","amount":2}
         ],
         "rooms":["spring"]
+      },{
+        "name": "shop",
+        "displayName":"Shop",
+        "catelog":"shop",
+        "earning":20,
+        "description":"Shop",
+        "requireResources":[
+          {"key":"stick","amount":2}
+        ],
+        "rooms":["bedroom"]
+      },{
+        "name": "restaurant",
+        "earning":20,
+        "displayName":"restaurant",
+        "catelog":"restaurant",
+        "description":"restaurant",
+        "requireResources":[
+          {"key":"stick","amount":2}
+        ],
+        "rooms":["bedroom"]
       }
     ],
     "allDecorations":[
       {
         "name": "tree",
+        "catelog":"decoration",
+        "affectRadius":10,
+        "earning":5,
         "displayName":"Tree",
         "description":"Tree",
         "requireResources":[
@@ -46,6 +77,9 @@
         "rooms":["bedroom"]
       },{
         "name": "lamp",
+        "earning":10,
+        "affectRadius":10,
+        "catelog":"decoration",
         "displayName":"Lamp",
         "description":"Lamp",
         "requireResources":[
@@ -54,6 +88,9 @@
         "rooms":["bedroom"]
       },{
         "name": "duck",
+        "earning":15,
+        "affectRadius":20,
+        "catelog":"decoration",
         "displayName":"Duck",
         "description":"Duck",
         "requireResources":[

@@ -26,11 +26,14 @@ public class Customer : MonoBehaviour
     Animator anim;
     //Transform wayPoint;
     Vector3 targetPosition;
-    DraggableRoom liveRoom;
+    DraggableItem nextItem;
+    DraggableItem liveBed;
     int maxBehavior = 5;
     float currentStayTime = 0;
     List<CustomerBehavior> behaviors = new List<CustomerBehavior>();
     Vector3 startPosition;
+    public float arriveDistance = 2f;
+    public Transform popupParent;
 
     public GameObject customerCamera;
     public string currentDoing;
@@ -40,7 +43,7 @@ public class Customer : MonoBehaviour
     public string customerType;
     public CustomerInfo customerInfo;
 
-    HashSet<DraggableRoom> visitedRoom = new HashSet<DraggableRoom>();
+    HashSet<DraggableItem> visitedItem = new HashSet<DraggableItem>();
 
     public void selectCustomerInfo()
     {
@@ -61,12 +64,12 @@ public class Customer : MonoBehaviour
     }
 
 
-    public void Init(DraggableRoom d, string n, string t)
+    public void Init(DraggableItem d, string n, string t)
     {
         customerName = n;
         customerType = t;
         startPosition = transform.position;
-        liveRoom = d;
+        liveBed = d;
         customerInfo = CustomerManager.Instance.customerInfoDict[customerType];
         //wayPoint = d.transform;
         //agent.SetDestination(wayPoint.position);
@@ -101,39 +104,73 @@ public class Customer : MonoBehaviour
         EventPool.Trigger<string>("updateOneCustomer", customerName);
     }
 
+    public void showLikeness(DraggableItem item)
+    {
+        if (!item)
+        {
+            return;
+        }
+        int tempPoint = 0;
+        foreach (var ite in item.affectedItems)
+        {
+            foreach (var fav in customerInfo.favoriteItems)
+            {
+                if (item.info.name == fav.key)
+                {
+                    tempPoint += fav.amount;
+                }
+            }
+        }
+        logBehavior("happy +" + tempPoint);
+        //Popup.createPopup("happy +" + tempPoint, popupParent);
+    }
+    public void showTips(DraggableItem item)
+    {
+        if (!item)
+        {
+            return;
+        }
+        int tempPoint = 0;
+        foreach (var ite in item.affectedItems)
+        {
+                    tempPoint += ((RoomItemInfo) ite.info).earning;
+        }
+        logBehavior("tips +" + tempPoint);
+        //Popup.createPopup("tips +" + tempPoint, popupParent);
+    }
 
-    DraggableRoom pickTarget(string targetName)
+    DraggableItem pickTarget(string targetName)
     {
 
         int favoritePoint = 0;
-        DraggableRoom res = null;
-        if (!RoomManager.Instance.rooms.ContainsKey(behaviors[0].target))
+        DraggableItem res = null;
+        if (!RoomItemManager.Instance.items.ContainsKey(behaviors[0].target))
         {
             return res;
         }
-        for(int i = 0;i< RoomManager.Instance.rooms[behaviors[0].target].Count; i++)
+        for(int i = 0;i< RoomItemManager.Instance.items[behaviors[0].target].Count; i++)
         {
-            var room = RoomManager.Instance.rooms[behaviors[0].target][i];
-            if (visitedRoom.Contains(room))
+            var item = RoomItemManager.Instance.items[behaviors[0].target][i];
+            if (visitedItem.Contains(item))
             {
                 continue;
             }
             int tempPoint = 0;
 
-            foreach(var item in room.allLikeableItems())
+            foreach (var ite in item.affectedItems)
             {
                 foreach (var fav in customerInfo.favoriteItems)
                 {
-                    if(item == fav.key)
+                    if (item.info.name == fav.key)
                     {
                         tempPoint += fav.amount;
                     }
                 }
             }
 
-            if (tempPoint > favoritePoint)
+            if (tempPoint >= favoritePoint)
             {
-                res = room;
+                res = item;
                 favoritePoint = tempPoint;
             }
         }
@@ -150,28 +187,30 @@ public class Customer : MonoBehaviour
         {
             case BehaviorStatus.none:
                 debugBehavior("start a new behavior");
-                if (behaviors[0].target == "bedroom")
+                if (behaviors[0].target == "bed")
                 {
+                    nextItem = liveBed;
                     changeCurrentDoing("Go check in");
-                    targetPosition = liveRoom.transform.position;
+                    targetPosition = liveBed.transform.position;
                     agent.SetDestination(targetPosition);
                     debugBehavior("will go to bedroom");
                 }
                 else if (behaviors[0].target == "home")
                 {
+                    nextItem = null;
                     changeCurrentDoing("Go back home");
                     targetPosition = startPosition;
                     agent.SetDestination(startPosition);
                     debugBehavior("will go to home");
-                    liveRoom.customerRelease();
+                    liveBed.customerRelease();
                 }
                 else
                 {
-                    var selectTarget = pickTarget(behaviors[0].target);
-                    if (selectTarget)
+                    nextItem = pickTarget(behaviors[0].target);
+                    if (nextItem)
                     {
-                        changeCurrentDoing("Go to " + selectTarget.info.displayName);
-                        Transform selectedRoom = selectTarget.transform;
+                        changeCurrentDoing("Go to " + nextItem.info.displayName);
+                        Transform selectedRoom = nextItem.transform;
                         targetPosition = selectedRoom.transform.position;
                         agent.SetDestination(targetPosition);
 
@@ -188,6 +227,7 @@ public class Customer : MonoBehaviour
                 behaviors[0].status = BehaviorStatus.go;
                 break;
             case BehaviorStatus.go:
+                showLikeness(nextItem);
                 changeCurrentDoing("stays in " + behaviors[0].target);
                 logBehavior("arrives " + behaviors[0].target);
                 currentStayTime = 0;
@@ -203,6 +243,7 @@ public class Customer : MonoBehaviour
                 if (!skipNextLog)
                 {
 
+                    showTips(nextItem);
                     logBehavior("enjoyed staying in " + behaviors[0].target);
                     skipNextLog = false;
                 }
@@ -210,7 +251,7 @@ public class Customer : MonoBehaviour
                 {
 
                     changeCurrentDoing("go back to bedroom");
-                    targetPosition = liveRoom.transform.position;
+                    targetPosition = liveBed.transform.position;
                     agent.SetDestination(targetPosition);
                     behaviors[0].status = BehaviorStatus.back;
                     debugBehavior("stop stay, start moving back bedroom");
@@ -245,7 +286,7 @@ public class Customer : MonoBehaviour
 
     public void decideBehavior()
     {
-        behaviors.Add(new CustomerBehavior("bedroom", stayTime));
+        behaviors.Add(new CustomerBehavior("bed", stayTime));
         behaviors.Add(new CustomerBehavior("shop", stayTime));
         behaviors.Add(new CustomerBehavior("spring", stayTime, false));
         behaviors.Add(new CustomerBehavior("restaurant", stayTime));
@@ -282,7 +323,7 @@ public class Customer : MonoBehaviour
         {
 
             float dist = Utils.distanceWithoutY(targetPosition, transform.position);
-            if (dist < 0.35f)
+            if (dist < arriveDistance)
             {
                 //arrived
                 doBehavior();

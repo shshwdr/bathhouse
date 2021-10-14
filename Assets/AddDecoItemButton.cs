@@ -8,7 +8,7 @@ public class AddDecoItemButton : AddMainItemButton
 
     public override bool CanPurchaseItem()
     {
-        return hasEnoughRequirementItems() && BuildModeManager.Instance.currentRoom.canAddNewItem();
+        return hasEnoughRequirementItems();// && BuildModeManager.Instance.currentRoom.canAddNewItem();
     }
 
 }

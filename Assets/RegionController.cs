@@ -7,22 +7,22 @@ public class RegionController : MonoBehaviour
     public Collider regionCollider;
     public string regionType;
     public int index;
-    public List<DraggableRoom> rooms = new List<DraggableRoom>();
+    public List<DraggableItem> rooms = new List<DraggableItem>();
 
     public Cinemachine.CinemachineVirtualCamera buildCamera;
 
-    public void addRoom(DraggableRoom room)
+    public void addRoom(DraggableItem room)
     {
         rooms.Add(room);
     }
 
-    public void removeRoom(DraggableRoom room)
+    public void removeRoom(DraggableItem room)
     {
         rooms.Remove(room);
     }
-    public bool canPlaceRoom(DraggableRoom room)
+    public bool canPlaceRoom(DraggableItem item)
     {
-        var roomCollider = room.placeCollider;
+        var roomCollider = item.placeCollider;
         if (!Utils.colliderContainFromTop(regionCollider, roomCollider))
         {
             return false;

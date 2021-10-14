@@ -1,21 +1,31 @@
 using LitJson;
+using Pool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
+public class RoomDecorationInfo : RoomItemInfo {
+    public float affectRadius;
+}
+
 public class RoomItemInfo : InfoWithRequirementBase
 {
-    public string[] rooms;
+    public string catelog;
+    public int earning;
 
 }
 public class AllRoomItemInfo
 {
     public List<RoomItemInfo> allMainItem;
-    public List<RoomItemInfo> allDecorations;
+    public List<RoomDecorationInfo> allDecorations;
 }
 public class RoomItemManager : Singleton<RoomItemManager>
 {
+    public float maxAffectRange = 0;
     public Dictionary<string, RoomItemInfo> mainItemInfoDict = new Dictionary<string, RoomItemInfo>();
     public Dictionary<string, RoomItemInfo> decoItemInfoDict = new Dictionary<string, RoomItemInfo>();
+    public Dictionary<string, List<DraggableItem>> items = new Dictionary<string, List<DraggableItem>>();
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,15 +35,42 @@ public class RoomItemManager : Singleton<RoomItemManager>
         {
             mainItemInfoDict[info.name] = info;
         }
-        foreach (RoomItemInfo info in allNPCs.allDecorations)
+        foreach (RoomDecorationInfo info in allNPCs.allDecorations)
         {
             decoItemInfoDict[info.name] = info;
+            maxAffectRange = Mathf.Max(info.affectRadius, maxAffectRange);
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    public void addItem(DraggableItem item)
     {
-        
+        if (!items.ContainsKey(item.catelog))
+        {
+            items[item.catelog] = new List<DraggableItem>();
+        }
+        items[item.catelog].Add(item);
+        EventPool.Trigger("changeItem");
+    }
+
+    public void removeItem(DraggableItem item)
+    {
+        items[item.catelog].Remove(item);
+        ShowNavmesh.Instance.ShowMesh();
+    }
+
+    public List<DraggableItem> availableBedItem()
+    {
+        List<DraggableItem> res = new List<DraggableItem>();
+        if (!items.ContainsKey("bed"))
+        {
+            return res;
+        }
+        foreach (DraggableItem item in items["bed"])
+        {
+            if (!item.occupied)
+            {
+                res.Add(item);
+            }
+        }
+        return res;
     }
 }

@@ -60,7 +60,7 @@ public class CustomerManager : Singleton<CustomerManager>
     {
         return nameList[Random.Range(0, nameList.Length)];
     }
-    public GameObject createCustomer(Vector3 position, DraggableRoom selectedRoom)
+    public GameObject createCustomer(Vector3 position, DraggableItem selectedRoom)
     {
         string customerType = generateCustoemrType();
         GameObject prefab = Resources.Load<GameObject>("NPC/"+ customerType);

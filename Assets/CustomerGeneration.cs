@@ -29,7 +29,7 @@ public class CustomerGeneration : MonoBehaviour
         if (customerGenerationTimer >= customerCurrentGenerationTime)
         {
             resetCustomerGenerationTimer();
-            var availableBedrooms = RoomManager.Instance.availableBedroom();
+            var availableBedrooms = RoomItemManager.Instance.availableBedItem();
             if (availableBedrooms.Count > 0)
             {
                 var selectedRoom = availableBedrooms[0];
