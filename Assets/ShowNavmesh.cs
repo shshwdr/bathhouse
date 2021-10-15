@@ -10,12 +10,15 @@ public class ShowNavmesh : Singleton<ShowNavmesh>
 	{
 		//EventPool.OptIn("changeItem", ShowMesh);
 		//ShowMesh();
+		NavMeshSurface nm = GameObject.FindObjectOfType<NavMeshSurface>();
+		//nm.BuildNavMesh();
+		nm.UpdateNavMesh(nm.navMeshData);
 	}
 
-	public IEnumerator show()
-    {
-		yield return new WaitForSeconds(0.1f);
-		// NavMesh.CalculateTriangulation returns a NavMeshTriangulation object.
+	
+	// Generates the NavMesh shape and assigns it to the MeshFilter component.
+	public void ShowMesh()
+	{
 		NavMeshTriangulation meshData = NavMesh.CalculateTriangulation();
 
 		// Create a new mesh and chuck in the NavMesh's vertex and triangle data to form the mesh.
@@ -25,13 +28,6 @@ public class ShowNavmesh : Singleton<ShowNavmesh>
 
 		// Assigns the newly-created mesh to the MeshFilter on the same GameObject.
 		GetComponent<MeshFilter>().mesh = mesh;
-
-	}
-	// Generates the NavMesh shape and assigns it to the MeshFilter component.
-	public void ShowMesh()
-	{
-
-		StartCoroutine(show());
 	}
 
 	public void Hide()

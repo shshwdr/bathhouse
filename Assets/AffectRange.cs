@@ -19,13 +19,13 @@ public class AffectRange : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GetComponent<Renderer>().enabled = true;
         var otherItem = other.GetComponent<DraggableItem>();
         if (otherItem && otherItem.isMainItem != parentItem.isMainItem)
         {
+            //GetComponent<Renderer>().enabled = true;
             parentItem.affectedItems.Add(otherItem);
             otherItem.affectedItems.Add(parentItem);
-            otherItem.GetComponentInChildren<Renderer>().material.color = Color.yellow;
+            otherItem.renderer.material.color = Color.yellow;
         }
         
     }
@@ -47,7 +47,7 @@ public class AffectRange : MonoBehaviour
             }
             otherItem.affectedItems.Remove(parentItem);
             parentItem.affectedItems.Remove(otherItem);
-            otherItem.GetComponentInChildren<Renderer>().material.color = Color.white;
+            otherItem.renderer.material.color = Color.white;
         }
     }
 

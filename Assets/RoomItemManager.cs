@@ -42,12 +42,31 @@ public class RoomItemManager : Singleton<RoomItemManager>
             maxAffectRange = Mathf.Max(info.affectRadius, maxAffectRange);
         }
     }
+
+    public bool canBuildItem(DraggableItem item)
+    {
+
+        var roomCollider = item.placeCollider;
+        foreach (var it in items.Values)
+        {
+            foreach(var r in it)
+            {
+
+                if (r.placeCollider.bounds.Intersects(roomCollider.bounds))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public void addItem(DraggableItem item)
     {
         if (!items.ContainsKey(item.catelog))
         {
             items[item.catelog] = new List<DraggableItem>();
         }
+
         items[item.catelog].Add(item);
         EventPool.Trigger("changeItem");
     }

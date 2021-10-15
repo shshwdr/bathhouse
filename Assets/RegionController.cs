@@ -27,14 +27,8 @@ public class RegionController : MonoBehaviour
         {
             return false;
         }
-        foreach(var r in rooms)
-        {
-            if (r.placeCollider.bounds.Intersects(roomCollider.bounds))
-            {
-                return false;
-            }
-        }
-        return true;
+        return RoomItemManager.Instance.canBuildItem(item);
+       // return true;
     }
 
     // Start is called before the first frame update

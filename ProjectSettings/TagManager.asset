@@ -12,12 +12,12 @@ TagManager:
   - Water
   - UI
   - item
-  - 
+  - camera
   - player
   - ground
   - itemNav
   - groundNav
-  - 
+  - navGenerateMesh
   - 
   - 
   - 

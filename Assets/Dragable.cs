@@ -9,6 +9,7 @@ public abstract class Dragable : MonoBehaviour
     Vector3 screenPoint;
     Camera dragCamera;
     Material material;
+    public Renderer renderer;
     public Collider placeCollider;
     public string type;
     public InfoBase info;
@@ -45,7 +46,7 @@ public abstract class Dragable : MonoBehaviour
     protected virtual void Start()
     {
         dragCamera = Camera.main;
-        material = GetComponentInChildren<Renderer>().material;
+        material = renderer.material;
         screenPoint = dragCamera.WorldToScreenPoint(gameObject.transform.position);
     }
 

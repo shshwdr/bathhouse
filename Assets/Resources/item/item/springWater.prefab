@@ -8,7 +8,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3572388829175311341}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 2.5
   m_Height: 1
@@ -217,11 +217,20 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3985797191788312271, guid: 587f1300e3cf9f94eb88b7b4ee01513b, type: 3}
+      propertyPath: renderer
+      value: 
+      objectReference: {fileID: 4843845168463419666}
+    - target: {fileID: 3985797191788312271, guid: 587f1300e3cf9f94eb88b7b4ee01513b, type: 3}
+      propertyPath: placeCollider
+      value: 
+      objectReference: {fileID: 3955778709484037492}
     - target: {fileID: 8056715537901369465, guid: 587f1300e3cf9f94eb88b7b4ee01513b, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.21
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3759335185425457581, guid: 587f1300e3cf9f94eb88b7b4ee01513b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 587f1300e3cf9f94eb88b7b4ee01513b, type: 3}
 --- !u!1 &3572388829175311341 stripped
 GameObject:
@@ -325,5 +334,10 @@ PrefabInstance:
 --- !u!1 &7427684011335056786 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2880035220422588378, guid: 5d480f252f4f2264d8ede5c064135df1, type: 3}
+  m_PrefabInstance: {fileID: 4675756241025206856}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4843845168463419666 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 277908176020345690, guid: 5d480f252f4f2264d8ede5c064135df1, type: 3}
   m_PrefabInstance: {fileID: 4675756241025206856}
   m_PrefabAsset: {fileID: 0}

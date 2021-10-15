@@ -111,13 +111,16 @@ public class Customer : MonoBehaviour
             return;
         }
         int tempPoint = 0;
-        foreach (var ite in item.affectedItems)
+        var items = new List<DraggableItem>(item.affectedItems);
+        items.Add(item);
+        foreach (var ite in items)
         {
             foreach (var fav in customerInfo.favoriteItems)
             {
-                if (item.info.name == fav.key)
+                if (ite.info.name == fav.key)
                 {
                     tempPoint += fav.amount;
+                    break;
                 }
             }
         }
@@ -131,7 +134,9 @@ public class Customer : MonoBehaviour
             return;
         }
         int tempPoint = 0;
-        foreach (var ite in item.affectedItems)
+        var items = new List<DraggableItem>(item.affectedItems);
+        items.Add(item);
+        foreach (var ite in items)
         {
                     tempPoint += ((RoomItemInfo) ite.info).earning;
         }

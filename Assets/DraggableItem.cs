@@ -36,9 +36,9 @@ public class DraggableItem : Dragable
         else
         {
             //use max radius
-            float radius = 0;// RoomItemManager.Instance.maxAffectRange;
-            effectRangeItem.GetComponent<Renderer>().enabled = false;
-            effectRangeItem.transform.localScale = new Vector3(radius, 1, radius);
+            //float radius = 0;// RoomItemManager.Instance.maxAffectRange;
+            //effectRangeItem.GetComponent<Renderer>().enabled = false;
+            //effectRangeItem.transform.localScale = new Vector3(radius, 1, radius);
         }
     }
 
@@ -55,7 +55,17 @@ public class DraggableItem : Dragable
     {
         isBuilt = true;
         RoomItemManager.Instance.addItem(this);
-        effectRangeItem.hideEffectOnAffectedItems();
+        if (effectRangeItem)
+        {
+            effectRangeItem.hideEffectOnAffectedItems();
+        }
+        foreach(var i in affectedItems)
+        {
+            if (i.effectRangeItem)
+            {
+                i.effectRangeItem.hideEffectOnAffectedItems();
+            }
+        }
 
         consumeRequirements();
         StartCoroutine(renderNavAsync());
