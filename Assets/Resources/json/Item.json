@@ -18,7 +18,7 @@
         "earning":12,
         "catelog":"bed",
         "description":"Bottle",
-        "isUnlocked":false,
+        "isUnlocked":true,
         "requireResources":[
           {"key":"stick","amount":2}
         ],
@@ -37,7 +37,7 @@
       },{
         "name": "saltSpringWater",
         "catelog":"spring",
-        "isUnlocked":false,
+        "isUnlocked":true,
         "earning":12,
         "displayName":"Salt Spring Water",
         "description":"Salt Spring Water",
@@ -49,7 +49,7 @@
         "name": "shop",
         "displayName":"Shop",
         "catelog":"shop",
-        "isUnlocked":false,
+        "isUnlocked":true,
         "earning":20,
         "description":"Shop",
         "requireResources":[
@@ -59,7 +59,7 @@
       },{
         "name": "restaurant",
         "earning":20,
-        "isUnlocked":false,
+        "isUnlocked":true,
         "displayName":"restaurant",
         "catelog":"restaurant",
         "description":"restaurant",

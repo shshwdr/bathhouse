@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 4435108023377002741}
   - component: {fileID: 1413602786994680653}
   - component: {fileID: 8610301287206227037}
-  - component: {fileID: 8615653546945339614}
   m_Layer: 0
   m_Name: popup
   m_TagString: Untagged
@@ -219,23 +218,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7539728181927982539}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3656b89c654fa4448fa6cf83ae3b222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textLabel: {fileID: 3016615928936267227}
---- !u!114 &8615653546945339614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7539728181927982539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daa6cb7825d05f04bbb53a7e77ecea90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_yAxisOnly: 0
-  m_rotate180: 0

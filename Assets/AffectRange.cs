@@ -25,7 +25,16 @@ public class AffectRange : MonoBehaviour
             //GetComponent<Renderer>().enabled = true;
             parentItem.affectedItems.Add(otherItem);
             otherItem.affectedItems.Add(parentItem);
-            otherItem.renderer.material.color = Color.yellow;
+            if (otherItem.isDragging)
+            {
+
+                parentItem.showActiveOverlay();
+            }
+            else
+            {
+                otherItem.showActiveOverlay();
+            }
+
         }
         
     }
@@ -47,25 +56,30 @@ public class AffectRange : MonoBehaviour
             }
             otherItem.affectedItems.Remove(parentItem);
             parentItem.affectedItems.Remove(otherItem);
-            otherItem.renderer.material.color = Color.white;
+            if (otherItem.isDragging)
+            {
+
+                parentItem.hideOverlay();
+            }
+            else
+            {
+                otherItem.hideOverlay();
+            }
+
         }
     }
 
     public void hideEffectOnAffectedItems()
     {
         GetComponent<Renderer>().enabled = false;
-        foreach(var item in parentItem.affectedItems)
-        {
-            item.GetComponentInChildren<Renderer>().material.color = Color.white;
-
-        }
+        
     }
 
     public void showEffectOnAffectedItems()
     {
         foreach (var item in parentItem.affectedItems)
         {
-            item.GetComponentInChildren<Renderer>().material.color = Color.yellow;
+            item.showActiveOverlay();
 
         }
     }

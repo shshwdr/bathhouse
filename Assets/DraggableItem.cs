@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DraggableItem : Dragable
+public class DraggableItem : Draggable
 {
     public bool isMainItem;
     public bool occupied;
@@ -13,6 +13,7 @@ public class DraggableItem : Dragable
 
     public string catelog { get { return ((RoomItemInfo)info).catelog; } }
 
+    
     public void customerOccupy()
     {
         occupied = true;
@@ -57,13 +58,16 @@ public class DraggableItem : Dragable
         RoomItemManager.Instance.addItem(this);
         if (effectRangeItem)
         {
+            hideOverlay();
             effectRangeItem.hideEffectOnAffectedItems();
         }
-        foreach(var i in affectedItems)
+        foreach (var item in affectedItems)
         {
-            if (i.effectRangeItem)
+            item.hideOverlay();
+            if (item.effectRangeItem)
             {
-                i.effectRangeItem.hideEffectOnAffectedItems();
+                item.hideOverlay();
+                item.effectRangeItem.hideEffectOnAffectedItems();
             }
         }
 
@@ -81,13 +85,13 @@ public class DraggableItem : Dragable
 
     }
 
-    public override void cancelDragItem()
-    {
-        base.cancelDragItem();
-        if (isBuilt)
-        {
-            //pop up
-            removeDragItem();
-        }
-    }
+    //public override void cancelDragItem()
+    //{
+    //    base.cancelDragItem();
+    //    if (isBuilt)
+    //    {
+    //        //pop up
+    //        removeDragItem();
+    //    }
+    //}
 }

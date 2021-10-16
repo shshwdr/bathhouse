@@ -7,7 +7,7 @@ public class MouseManager : Singleton<MouseManager>
     public GameObject currentDragItem;
     public bool isInBuildMode;
     public GameObject selectedItem;
-
+    public float rotateSmooth = 10.0f;
     void selectItem(GameObject go)
     {
         selectedItem = go;
@@ -35,7 +35,7 @@ public class MouseManager : Singleton<MouseManager>
 
     public void finishCurrentDragItem()
     {
-
+        
 
         isInBuildMode = false;
         currentDragItem = null;
@@ -70,55 +70,98 @@ public class MouseManager : Singleton<MouseManager>
     {
         //Doozy.Engine.GameEventMessage.SendEvent("addItem");
     }
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButtonDown(1))
-    //    {
-    //        Debug.Log("mouse down");
-    //        if (currentDragItem == null && isInBuildMode /*&& !BuildModeManager.Instance.currentRoom*/)
-    //        {
-    //            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-    //            foreach( var hit in Physics.RaycastAll(ray))
-    //            {
-    //                Debug.Log("hit " + hit.transform.gameObject);
-    //                var hitItem = hit.transform.GetComponent<DraggableRoom>();
-    //                if (hitItem)
-    //                {
-    //                    Doozy.Engine.GameEventMessage.SendEvent("showRoomEditView");
-    //                }
-    //                selectItem(hit.transform.gameObject);
-    //                return;
-    //            }
-    //        }
-    //        return;
-    //    }
 
-    //    if (Input.GetMouseButton(0))
-    //    {
 
-    //        if (currentDragItem == null)
-    //        {
-    //            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    private void Update()
+    {
+        if (currentDragItem)
+        {
+            float tilt = Input.GetAxisRaw("Rotate");
+            currentDragItem.transform.RotateAround(Vector3.zero, Vector3.up* tilt, rotateSmooth * Time.deltaTime);
+        }
 
-    //            foreach (var hit in Physics.RaycastAll(ray))
-    //            {
-    //                Debug.Log("hit " + hit.transform.gameObject);
-    //                var hitItem = hit.transform.GetComponent<DraggableItem>();
-    //                if (hitItem)
-    //                {
-    //                    if (hitItem.room.isEditing)
-    //                    {
-    //                        startDragItem(hitItem.gameObject);
-    //                        return;
-    //                    }
-    //                }
-    //            }
-    //        }
-            
-    //        return;
-    //    }
-    //}
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                print("on ui");
+                return;
+            }
+            Debug.Log("mouse down");
+
+            if (currentDragItem)
+            {
+                cancelCurrentDragItem();
+                return;
+            }
+
+
+            if (currentDragItem == null && isInBuildMode )
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                foreach (var hit in Physics.RaycastAll(ray))
+                {
+                    Debug.Log("hit " + hit.transform.gameObject);
+                    var hitItem = hit.transform.GetComponent<DraggableItem>();
+                    if (hitItem)
+                    {
+                        Doozy.Engine.GameEventMessage.SendEvent("ItemAction");
+                        selectItem(hit.transform.gameObject);
+                        return;
+                    }
+                }
+            }
+            return;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                print("on ui");
+                return;
+            }
+
+            if(selectedItem && currentDragItem)
+            {
+                Debug.LogError("could only hold one item");
+                return;
+            }
+            if (currentDragItem)
+            {
+                currentDragItem.GetComponent<Draggable>().tryBuild();
+            }
+
+            if (selectedItem)
+            {
+                deselectIem();
+
+                Doozy.Engine.GameEventMessage.SendEvent("CancelItemAction");
+            }
+            //if (currentDragItem == null)
+            //{
+            //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            //    foreach (var hit in Physics.RaycastAll(ray))
+            //    {
+            //        Debug.Log("hit " + hit.transform.gameObject);
+            //        var hitItem = hit.transform.GetComponent<DraggableItem>();
+            //        if (hitItem)
+            //        {
+            //            if (hitItem.room.isEditing)
+            //            {
+            //                startDragItem(hitItem.gameObject);
+            //                return;
+            //            }
+            //        }
+            //    }
+            //}
+
+            return;
+        }
+    }
 
     //public void removeSelectedRoom()
     //{
@@ -150,7 +193,7 @@ public class MouseManager : Singleton<MouseManager>
     public void removeCurrentDragging()
     {
         //pop up 
-        currentDragItem.GetComponent<Dragable>().removeDragItem();
+        currentDragItem.GetComponent<Draggable>().removeDragItem();
     }
 
 }

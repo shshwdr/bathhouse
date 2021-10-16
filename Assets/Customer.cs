@@ -125,7 +125,7 @@ public class Customer : MonoBehaviour
             }
         }
         logBehavior("happy +" + tempPoint);
-        //Popup.createPopup("happy +" + tempPoint, popupParent);
+        Popup.createPopup("happy +" + tempPoint, popupParent);
     }
     public void showTips(DraggableItem item)
     {
@@ -141,7 +141,7 @@ public class Customer : MonoBehaviour
                     tempPoint += ((RoomItemInfo) ite.info).earning;
         }
         logBehavior("tips +" + tempPoint);
-        //Popup.createPopup("tips +" + tempPoint, popupParent);
+        Popup.createPopup("tips +" + tempPoint, popupParent);
     }
 
     DraggableItem pickTarget(string targetName)

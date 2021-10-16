@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3928902633133652163}
   - component: {fileID: 7243349667092103567}
   - component: {fileID: 3953004561350661004}
+  - component: {fileID: 2062007042396771315}
+  - component: {fileID: 6380540608180293009}
   m_Layer: 0
   m_Name: Hud
   m_TagString: Untagged
@@ -99,6 +101,32 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2062007042396771315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7321617094424832131}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daa6cb7825d05f04bbb53a7e77ecea90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_yAxisOnly: 0
+  m_rotate180: 0
+--- !u!114 &6380540608180293009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7321617094424832131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06124ae444f5614eb8fd79539084728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7404668250230751158
 GameObject:
   m_ObjectHideFlags: 0

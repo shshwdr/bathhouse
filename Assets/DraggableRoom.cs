@@ -2,7 +2,7 @@
 //using System.Collections.Generic;
 //using UnityEngine;
 
-//public class DraggableRoom : Dragable
+//public class DraggableRoom : Draggable
 //{
 //    public bool occupied;
 //    public Cinemachine.CinemachineVirtualCamera buildCamera;
